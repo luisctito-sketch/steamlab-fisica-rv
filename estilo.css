@@ -22,3 +22,5 @@
 /* En VR de escritorio, liberar el área del visor */
 body.vr-active #ui,body.vr-active .viewbar{display:none!important}
 body.vr-active #scene-wrap{height:100dvh!important;width:100vw!important}
+
+.visorlink{font-size:.78rem;background:#15b8c7;color:#05222e;text-decoration:none;padding:9px 12px;border-radius:8px;font-weight:800;white-space:nowrap}.viewbar{flex-wrap:wrap}.viewbar span{flex:1}
