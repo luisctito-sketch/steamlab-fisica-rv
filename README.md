@@ -18,3 +18,12 @@ Publica los cinco archivos de este ZIP directamente en la raíz del repositorio 
 ## Limitaciones
 
 El modo Cardboard es estereoscópico sin exigir WebXR. La rotación automática y el sensor de orientación pueden no funcionar en todos los navegadores/teléfonos. No equivale a RV 6DoF ni ofrece seguimiento posicional; tampoco tiene calibración IPD específica de cada visor. La pantalla dividida y el sensor deben probarse en el teléfono del usuario. Usa sesiones breves y si genera mareos suspende la actividad. No se ha probado aquí en el visor físico del usuario.
+
+
+## V4 — Visor con recenter y panel virtual
+
+- Se conservan los otros archivos de la aplicación V3.
+- `visor-cardboard.html` se reconstruyó para iniciar con el experimento al frente.
+- El sensor de movimiento es optativo y aplica suavizado. Se puede recalibrar con Centrar.
+- Selecciona opciones mirando el menú lateral durante dos segundos.
+- Sin seguimiento espacial 6DoF: modo Cardboard estereoscópico experimental.
