@@ -33,5 +33,59 @@ if(state.lineas&&state.q!==0){const color=state.q>0?0xffa66e:0x82abff;for(let i=
 // 3D point and pulse rings are schematic; integration uses analytic Gauss result rather than numerical sampling.
 const dot=new T.Mesh(new T.SphereGeometry(.055,12,10),mat('#ffffff'));dot.position.set(off+r,0,0);group.add(dot);const axes=new T.AxesHelper(2.3);group.add(axes);
 }});
+// Ajuste de cámara: en móvil sin visor, solo gestos táctiles (no giros involuntarios del teléfono).
+const sceneEl=document.querySelector('a-scene');
+const rig=$('rig'),cam=$('cam');
+const original={rigPos:'0 1.6 4.3',menuPos:'-2.6 1.45 -2.6',menuRot:'0 20 0',worldPos:'0 1.25 -1.3'};
+function resetCamera(){
+  if(sceneEl.is('vr-mode'))return;
+  rig.setAttribute('position',original.rigPos);
+  rig.setAttribute('rotation','0 0 0');
+  if(cam.components['look-controls']){
+    const lc=cam.components['look-controls'];
+    if(lc.yawObject)lc.yawObject.rotation.y=0;
+    if(lc.pitchObject)lc.pitchObject.rotation.x=-0.07;
+  }
+}
+$('centrar').addEventListener('click',resetCamera);
+// En VR se redistribuye el escenario alrededor de un nuevo origen cercano al observador;
+// evitamos que quede fuera del campo visual de la lente al entrar a la sesión.
+function centerVR(){
+  const T=AFRAME.THREE;
+  const cameraObj=cam.getObject3D('camera');
+  if(!cameraObj)return;
+  cameraObj.updateWorldMatrix(true,false);
+  const head=new T.Vector3(),forward=new T.Vector3();
+  cameraObj.getWorldPosition(head);cameraObj.getWorldDirection(forward);
+  forward.y=0;
+  if(forward.lengthSq()<.001)forward.set(0,0,-1);
+  forward.normalize();
+  const center=head.clone().addScaledVector(forward,2.6);
+  const world=$('world'),menu=$('vrmenu'),title=$('titulo3d'),insideText=$('insideText');
+  world.object3D.position.copy(center);
+  world.object3D.position.y=head.y-.1;
+  // Panel al costado izquierdo del campo de visión, siempre alcanzable mirando ligeramente a la izquierda.
+  menu.object3D.position.copy(center).add(new T.Vector3(-1.65,.1,0));
+  const angle=Math.atan2(forward.x,forward.z)+Math.PI;
+  menu.object3D.rotation.set(0,angle,0);
+  title.object3D.position.copy(center).add(new T.Vector3(0,1.65,0));
+  insideText.object3D.position.copy(center).add(new T.Vector3(0,1.25,0));
+  title.object3D.rotation.set(0,angle,0);
+  insideText.object3D.rotation.set(0,angle,0);
+}
+sceneEl.addEventListener('enter-vr',()=>{
+  // Oculta la interfaz HTML en sesión inmersiva para que no tape la vista estereoscópica.
+  document.body.classList.add('vr-active');
+  requestAnimationFrame(()=>setTimeout(centerVR,350));
+});
+sceneEl.addEventListener('exit-vr',()=>{
+  document.body.classList.remove('vr-active');
+  $('world').setAttribute('position',original.worldPos);
+  $('vrmenu').setAttribute('position',original.menuPos);
+  $('vrmenu').setAttribute('rotation',original.menuRot);
+  $('titulo3d').setAttribute('position','0 3.3 -3.5');
+  $('insideText').setAttribute('position','0 2.7 -3.0');
+  resetCamera();
+});
 updateState();
 })();

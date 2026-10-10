@@ -1,1 +1,24 @@
 :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#e8f5ff;background:#08182c}*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{display:grid;grid-template-columns:minmax(300px,390px) minmax(0,1fr);height:100dvh;overflow:hidden}#ui{background:#10243d;overflow:auto;border-right:1px solid #365371;padding:16px;z-index:5}header{display:flex;justify-content:space-between;gap:10px;align-items:start}header strong{font-size:1rem}header small{display:block;font-size:.76rem;color:#9bbbd2;margin-top:2px}#tipo{font-size:.65rem;border-radius:999px;background:#203e58;padding:5px;color:#a7e9f3;white-space:nowrap}.intro h1{font-size:1.47rem;line-height:1.17;margin:17px 0 6px}.intro p,.foot{color:#c5d9e8;font-size:.86rem;line-height:1.44}.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 0}.controls label,.result label{font-size:.77rem;font-weight:700;color:#d9eafa}select,input[type=range]{display:block;width:100%;margin-top:6px}select{border:1px solid #466785;border-radius:7px;background:#1a3652;color:white;padding:7px}input[type=range]{accent-color:#22d3d6}.actions{grid-column:1/-1;display:flex;gap:7px;flex-wrap:wrap}button{cursor:pointer;border:0;border-radius:8px;background:#2b5273;color:white;font-weight:750;padding:9px 10px;font-size:.78rem}#verifica{background:#0ab7bc;color:#05222e}button:focus-visible,select:focus-visible{outline:2px solid #f9d77b;outline-offset:2px}.result{border:1px solid #355976;background:#0d2a43;padding:12px;border-radius:13px;font-size:.83rem;line-height:1.42}.result>div{margin:4px 0 10px}#predbox{padding:10px;background:#153a56;border-radius:8px}.math{color:#f9d77b;font-weight:750}.foot{margin-bottom:0}#scene-wrap{min-width:0;position:relative;overflow:hidden;background:#091728}a-scene{width:100%;height:100%}@media(max-width:850px){body{display:flex;flex-direction:column;height:100dvh}#ui{flex:0 0 auto;max-height:48dvh;padding:10px 12px;border-right:0;border-bottom:1px solid #365371}header small{font-size:.67rem}.intro h1{margin:8px 0 4px;font-size:1.09rem}.intro p{font-size:.76rem;margin:0}.controls{grid-template-columns:1fr 1fr;gap:6px;padding:8px 0}.controls label{font-size:.7rem}.controls select{padding:6px}.controls .actions{gap:5px}.actions button{padding:7px;font-size:.68rem}.result{font-size:.75rem;padding:8px}.result>div{margin:2px 0 5px}.foot{font-size:.7rem;margin:6px 0 0}#scene-wrap{flex:1;min-height:0}}@media(max-width:420px){#ui{max-height:49dvh}.controls{gap:5px}.actions button{font-size:.65rem}}
+
+/* V2: móvil con visor independiente y controles no superpuestos */
+.viewbar{display:none;align-items:center;justify-content:space-between;gap:6px;background:#0a2037;padding:7px 12px;min-height:44px}
+.viewbar span{font-size:.78rem;color:#b9e5f3}.viewbar button{padding:7px 10px}
+#scene-wrap>a-scene{display:block}
+@media(max-width:850px){
+ body{display:block;height:auto;min-height:100dvh;overflow:auto}
+ #ui{max-height:none;overflow:visible;padding:10px 12px}
+ #scene-wrap{display:flex;flex-direction:column;width:100%;height:clamp(330px,65dvh,600px);min-height:330px;overflow:hidden}
+ #scene-wrap .viewbar{display:flex;flex:none}
+ #scene-wrap a-scene{flex:1;min-height:0;height:calc(100% - 44px)!important}
+ .intro p{display:none}
+ .intro h1{font-size:1.12rem;margin:6px 0}
+ .controls{padding:6px 0}
+ .foot{display:none}
+ .result{padding:7px 9px}
+ .result #respuesta{font-size:.74rem}
+ }
+@media(max-width:420px){#ui{padding:8px 10px}#scene-wrap{height:60dvh;min-height:340px}.viewbar span{font-size:.72rem}}
+
+/* En VR de escritorio, liberar el área del visor */
+body.vr-active #ui,body.vr-active .viewbar{display:none!important}
+body.vr-active #scene-wrap{height:100dvh!important;width:100vw!important}

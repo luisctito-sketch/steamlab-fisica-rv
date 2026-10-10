@@ -28,3 +28,13 @@ Sin montaje de alto voltaje. Sesiones de visores breves, supervisadas y optativa
 
 ## Estado
 Proyecto preparado para pruebas de navegador. No se ha probado en el hardware VR concreto del usuario. El visualizador refleja un modelo ideal, sin medición real.
+
+
+## V2 — vista móvil y RV
+La escena móvil se muestra abajo del panel con controles y un botón **Centrar vista**.
+La orientación por sensores del móvil se desactiva en modo 3D normal; se puede girar con el dedo.
+Al entrar en VR, se reubica la estación cerca del punto de vista para recuperar la esfera
+si el teléfono tenía otra orientación. Al salir se restauran las posiciones del escritorio.
+**Compatibilidad:** el modo VR estereoscópico de teléfono no garantiza seguimiento giroscópico
+en todos los navegadores; se necesita visor/navegador WebXR compatible para inmersión
+completa. Si no funciona el giro de cabeza, usar el modo 3D táctil.
